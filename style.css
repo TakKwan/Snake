@@ -1,0 +1,22 @@
+body {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+  display: flex;
+  flex-flow: row wrap;
+
+  background-color: rgb(151, 82, 82);
+  height: 400px;
+  width: 400px;
+  border: solid 2px white;
+}
+
+.board div {
+  background-color: blue;
+  width: 20px;
+  height: 20px;
+}
