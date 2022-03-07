@@ -9,14 +9,18 @@ body {
   display: flex;
   flex-flow: row wrap;
 
-  background-color: rgb(151, 82, 82);
+  background-color: black;
   height: 400px;
   width: 400px;
   border: solid 2px white;
 }
 
-.board div {
-  background-color: blue;
+.cell {
   width: 20px;
   height: 20px;
+}
+
+.snake {
+  background-color: white;
+  border-radius: 50%;
 }
