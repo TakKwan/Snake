@@ -15,5 +15,13 @@ const initSnake = () => {
   })
 }
 
+const moveSnake = (direction) => {
+  snake.unshift(snake[0] + direction)
+  board.children[snake[0]].classList.add('snake')
+  board.children[snake[snake.length - 1]].classList.remove('snake')
+  snake.pop()
+}
+
 makeBoard()
 initSnake()
+moveSnake(20)
