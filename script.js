@@ -2,18 +2,29 @@ const board = document.querySelector('.board')
 const snake = [21, 1, 2, 3]
 const width = 20
 const height = 20
-const moveUp = -20
-const moveDown = 20
+const moveUp = -width
+const moveDown = width
 const moveLeft = -1
 const moveRight = 1
 let direction = moveDown
+let moveIntervalID
 
 document.addEventListener('keydown', (e) => {
   console.log(e.key)
-  if (e.key === 'ArrowUp') direction = moveUp
-  if (e.key === 'ArrowDown') direction = moveDown
-  if (e.key === 'ArrowLeft') direction = moveLeft
-  if (e.key === 'ArrowRight') direction = moveRight
+  switch (e.key) {
+    case 'ArrowUp':
+      direction = moveUp
+      break
+    case 'ArrowDown':
+      direction = moveDown
+      break
+    case 'ArrowLeft':
+      direction = moveLeft
+      break
+    case 'ArrowRight':
+      direction = moveRight
+      break
+  }
 })
 
 const makeBoard = () => {
@@ -31,7 +42,6 @@ const initSnake = () => {
 }
 
 const moveSnake = () => {
-  if (checkNextCell() === false) return
   snake.unshift(snake[0] + direction)
   board.children[snake[0]].classList.add('snake')
   board.children[snake[snake.length - 1]].classList.remove('snake')
@@ -39,12 +49,21 @@ const moveSnake = () => {
 }
 
 const game = () => {
-  let moveIntervalID = setInterval(moveSnake, 50)
+  moveIntervalID = setInterval(checkNextCell, 100)
 }
 
 const checkNextCell = () => {
-  if (board.children[snake[0] + direction].classList.contains('snake'))
-    return false
+  if (board.children[snake[0] + direction] === undefined) return endGame()
+  else if (snake[0] % width === width - 1 && direction === 1) return endGame()
+  else if (snake[0] % width === 0 && direction === -1) return endGame()
+  else if (board.children[snake[0] + direction].classList.contains('snake'))
+    return endGame()
+  moveSnake()
+}
+
+const endGame = () => {
+  clearInterval(moveIntervalID)
+  console.log('game ends')
 }
 
 makeBoard()
