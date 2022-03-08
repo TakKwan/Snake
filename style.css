@@ -29,3 +29,7 @@ body {
   background-color: rgb(255, 0, 0);
   border-radius: 50%;
 }
+
+.score-board {
+  color: white;
+}
