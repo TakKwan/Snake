@@ -8,21 +8,22 @@ const moveLeft = -1
 const moveRight = 1
 let direction = moveDown
 let moveIntervalID
+let appleIntervalID
+const numOfCells = width * height
 
 document.addEventListener('keydown', (e) => {
-  console.log(e.key)
   switch (e.key) {
     case 'ArrowUp':
-      direction = moveUp
+      if (direction != moveDown) direction = moveUp
       break
     case 'ArrowDown':
-      direction = moveDown
+      if (direction != moveUp) direction = moveDown
       break
     case 'ArrowLeft':
-      direction = moveLeft
+      if (direction != moveRight) direction = moveLeft
       break
     case 'ArrowRight':
-      direction = moveRight
+      if (direction != moveLeft) direction = moveRight
       break
   }
 })
@@ -41,15 +42,9 @@ const initSnake = () => {
   })
 }
 
-const moveSnake = () => {
-  snake.unshift(snake[0] + direction)
-  board.children[snake[0]].classList.add('snake')
-  board.children[snake[snake.length - 1]].classList.remove('snake')
-  snake.pop()
-}
-
 const game = () => {
   moveIntervalID = setInterval(checkNextCell, 100)
+  appleIntervalID = setInterval(generateApples, 4000)
 }
 
 const checkNextCell = () => {
@@ -61,11 +56,39 @@ const checkNextCell = () => {
   moveSnake()
 }
 
+const moveSnake = () => {
+  snake.unshift(snake[0] + direction)
+  if (checkForApple()) eatApple()
+
+  board.children[snake[0]].classList.add('snake')
+  board.children[snake[snake.length - 1]].classList.remove('snake')
+  snake.pop()
+}
+
+const checkForApple = () => {
+  if (board.children[snake[0]].classList.contains('apple')) return true
+  return false
+}
+
+const eatApple = () => {
+  board.children[snake[0]].classList.remove('apple')
+  console.log('apple removed')
+}
+
+const generateApples = () => {
+  let newApple = Math.floor(Math.random() * numOfCells)
+  while (snake.includes(newApple))
+    newApple = Math.floor(Math.random() * numOfCells)
+  board.children[newApple].classList.add('apple')
+}
+
 const endGame = () => {
   clearInterval(moveIntervalID)
+  clearInterval(appleIntervalID)
   console.log('game ends')
 }
 
 makeBoard()
 initSnake()
+generateApples()
 game()

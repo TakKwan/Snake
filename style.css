@@ -24,3 +24,8 @@ body {
   background-color: white;
   border-radius: 50%;
 }
+
+.apple {
+  background-color: rgb(255, 0, 0);
+  border-radius: 50%;
+}
