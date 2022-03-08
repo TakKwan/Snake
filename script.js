@@ -22,6 +22,7 @@ const cellsAroundTail = [
   -1
 ]
 let score = 0
+let apple = NaN
 
 document.addEventListener('keydown', (e) => {
   switch (e.key) {
@@ -55,8 +56,10 @@ const initSnake = () => {
 }
 
 const game = () => {
-  moveIntervalID = setInterval(checkNextCell, 100)
-  appleIntervalID = setInterval(generateApples, 4000)
+  moveIntervalID = setInterval(checkNextCell, 110)
+  appleIntervalID = setInterval(() => {
+    if (isNaN(apple)) generateApple()
+  }, 3000)
 }
 
 const checkNextCell = () => {
@@ -86,6 +89,7 @@ const eatApple = () => {
   board.children[snake[0]].classList.remove('apple')
   score++
   scoreBoard.innerText = `Score: ${score}`
+  apple = NaN
   console.log('apple removed')
   growTail()
 }
@@ -96,16 +100,22 @@ const growTail = () => {
   const snakeTailIndex = snake.length - 1
   for (let index = 0; index < 8; index++) {
     aroundCell = snake[snakeTailIndex] + cellsAroundTail[index]
-    if (board.children[aroundCell] != undefined) arr.push(aroundCell)
+    if (
+      board.children[aroundCell] != undefined &&
+      !board.children[aroundCell].classList.contains('snake')
+    )
+      arr.push(aroundCell)
   }
   snake.push(arr[0])
-  board.children[snake[snakeTailIndex + 1]].classList.add('snake')
+  board.children[snake[snake.length - 1]].classList.add('snake')
 }
 
-const generateApples = () => {
-  let newApple = Math.floor(Math.random() * numOfCells)
-  while (snake.includes(newApple))
+const generateApple = () => {
+  let newApple
+  do {
     newApple = Math.floor(Math.random() * numOfCells)
+  } while (snake.includes(newApple))
+  apple = newApple
   board.children[newApple].classList.add('apple')
 }
 
@@ -117,5 +127,5 @@ const endGame = () => {
 
 makeBoard()
 initSnake()
-generateApples()
+generateApple()
 game()
