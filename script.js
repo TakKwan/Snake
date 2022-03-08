@@ -11,6 +11,17 @@ let direction = moveDown
 let moveIntervalID
 let appleIntervalID
 const numOfCells = width * height
+const cellsAroundTail = [
+  -width + 1,
+  -width - 1,
+  width + 1,
+  width - 1,
+  width,
+  -width,
+  1,
+  -1
+]
+let score = 0
 
 document.addEventListener('keydown', (e) => {
   switch (e.key) {
@@ -59,11 +70,11 @@ const checkNextCell = () => {
 
 const moveSnake = () => {
   snake.unshift(snake[0] + direction)
-  if (checkForApple()) eatApple()
 
   board.children[snake[0]].classList.add('snake')
   board.children[snake[snake.length - 1]].classList.remove('snake')
   snake.pop()
+  if (checkForApple()) eatApple()
 }
 
 const checkForApple = () => {
@@ -73,12 +84,23 @@ const checkForApple = () => {
 
 const eatApple = () => {
   board.children[snake[0]].classList.remove('apple')
-  scoreBoard.innerText++
+  score++
+  scoreBoard.innerText = `Score: ${score}`
   console.log('apple removed')
   growTail()
 }
 
-const growTail = () => {}
+const growTail = () => {
+  let arr = []
+  let aroundCell
+  const snakeTailIndex = snake.length - 1
+  for (let index = 0; index < 8; index++) {
+    aroundCell = snake[snakeTailIndex] + cellsAroundTail[index]
+    if (board.children[aroundCell] != undefined) arr.push(aroundCell)
+  }
+  snake.push(arr[0])
+  board.children[snake[snakeTailIndex + 1]].classList.add('snake')
+}
 
 const generateApples = () => {
   let newApple = Math.floor(Math.random() * numOfCells)
