@@ -1,4 +1,5 @@
 const board = document.querySelector('.board')
+const scoreBoard = document.querySelector('.score-board')
 const snake = [21, 1, 2, 3]
 const width = 20
 const height = 20
@@ -72,8 +73,12 @@ const checkForApple = () => {
 
 const eatApple = () => {
   board.children[snake[0]].classList.remove('apple')
+  scoreBoard.innerText++
   console.log('apple removed')
+  growTail()
 }
+
+const growTail = () => {}
 
 const generateApples = () => {
   let newApple = Math.floor(Math.random() * numOfCells)
