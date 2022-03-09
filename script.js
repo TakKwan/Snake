@@ -1,7 +1,8 @@
 const board = document.querySelector('.board')
 const scorehtml = document.querySelector('#score')
 const lengthhtml = document.querySelector('#length')
-const snake = [21, 1, 2, 3]
+const resetButton = document.querySelector('#reset')
+const snake = [61, 41, 21, 1]
 const width = 20
 const height = 20
 const moveUp = -width
@@ -37,6 +38,20 @@ document.addEventListener('keydown', (e) => {
   if (!isGameStart) {
     game()
   }
+})
+
+resetButton.addEventListener('click', () => {
+  while (board.firstChild) board.removeChild(board.firstChild)
+  makeBoard()
+  while (snake[0]) snake.pop()
+  snake.push(61)
+  snake.push(41)
+  snake.push(21)
+  snake.push(1)
+  initSnake()
+  generateApple()
+  scorehtml.innerText = 'Score: 0'
+  lengthhtml.innerText = 'Length: 4'
 })
 
 const makeBoard = () => {
@@ -129,7 +144,6 @@ const generateApple = () => {
 const endGame = () => {
   clearInterval(moveIntervalID)
   clearInterval(appleIntervalID)
-  console.log('game ends')
 }
 
 const removeApple = () => {
