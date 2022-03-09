@@ -144,6 +144,7 @@ const generateApple = () => {
 const endGame = () => {
   clearInterval(moveIntervalID)
   clearInterval(appleIntervalID)
+  clearInterval(removeAppleIntervalID)
 }
 
 const removeApple = () => {

@@ -26,8 +26,8 @@ body {
 }
 
 .apple {
-  background-color: rgb(255, 0, 0);
-  border-radius: 50%;
+  background-image: url('red_apple.png');
+  background-size: cover;
 }
 
 .score-board {
