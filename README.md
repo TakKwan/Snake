@@ -21,3 +21,7 @@
 # Trello
 
 #### [snake](https://trello.com/b/CakxyeRs/snake)
+
+# Citations:
+
+#### [Red Apple](https://www.dreamstime.com/isolated-red-apple-pixel-art-white-background-apple-big-pixels-apple-pixel-art-image106403017)
