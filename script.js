@@ -1,5 +1,6 @@
 const board = document.querySelector('.board')
 const scorehtml = document.querySelector('#score')
+const lengthhtml = document.querySelector('#length')
 const snake = [21, 1, 2, 3]
 const width = 20
 const height = 20
@@ -10,11 +11,13 @@ const moveRight = 1
 const numOfCells = width * height
 const cellsAroundTail = [width, -width, 1, -1]
 let direction = 0
-let moveIntervalID
-let appleIntervalID
 let score = 0
 let apple = NaN
 let isGameStart = false
+let snakeLength = 4
+let appleIntervalID
+let moveIntervalID
+let removeAppleIntervalID
 
 document.addEventListener('keydown', (e) => {
   switch (e.key) {
@@ -55,7 +58,13 @@ const game = () => {
   isGameStart = true
   moveIntervalID = setInterval(checkNextCell, 110)
   appleIntervalID = setInterval(() => {
-    if (isNaN(apple)) generateApple()
+    if (isNaN(apple)) {
+      generateApple()
+      removeAppleIntervalID = setInterval(() => {
+        clearInterval(removeAppleIntervalID)
+        if (apple) removeApple()
+      }, 6000)
+    }
   }, 3000)
 }
 
@@ -77,15 +86,15 @@ const moveSnake = () => {
 }
 
 const checkForApple = () => {
-  if (board.children[snake[0]].classList.contains('apple')) return true
-  return false
+  return board.children[snake[0]].classList.contains('apple')
 }
 
 const eatApple = () => {
   board.children[snake[0]].classList.remove('apple')
+  apple = NaN
+  clearInterval(removeAppleIntervalID)
   score++
   scorehtml.innerText = `Score: ${score}`
-  apple = NaN
   console.log('apple removed')
   for (let i = 0; i < 2; i++) growTail()
 }
@@ -104,6 +113,8 @@ const growTail = () => {
   }
   snake.push(arr[0])
   board.children[snake[snake.length - 1]].classList.add('snake')
+  snakeLength++
+  lengthhtml.innerText = `Length: ${snakeLength}`
 }
 
 const generateApple = () => {
@@ -119,6 +130,11 @@ const endGame = () => {
   clearInterval(moveIntervalID)
   clearInterval(appleIntervalID)
   console.log('game ends')
+}
+
+const removeApple = () => {
+  board.children[apple].classList.remove('apple')
+  apple = NaN
 }
 
 makeBoard()
