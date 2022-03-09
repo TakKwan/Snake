@@ -1,5 +1,5 @@
 const board = document.querySelector('.board')
-const scoreBoard = document.querySelector('.score-board')
+const scorehtml = document.querySelector('#score')
 const snake = [21, 1, 2, 3]
 const width = 20
 const height = 20
@@ -7,22 +7,14 @@ const moveUp = -width
 const moveDown = width
 const moveLeft = -1
 const moveRight = 1
-let direction = moveDown
+const numOfCells = width * height
+const cellsAroundTail = [width, -width, 1, -1]
+let direction = 0
 let moveIntervalID
 let appleIntervalID
-const numOfCells = width * height
-const cellsAroundTail = [
-  -width + 1,
-  -width - 1,
-  width + 1,
-  width - 1,
-  width,
-  -width,
-  1,
-  -1
-]
 let score = 0
 let apple = NaN
+let isGameStart = false
 
 document.addEventListener('keydown', (e) => {
   switch (e.key) {
@@ -39,10 +31,14 @@ document.addEventListener('keydown', (e) => {
       if (direction != moveLeft) direction = moveRight
       break
   }
+  if (!isGameStart) {
+    game()
+  }
 })
 
 const makeBoard = () => {
-  for (let i = 0; i < 400; i++) {
+  const maxCells = height * width
+  for (let i = 0; i < maxCells; i++) {
     let cell = document.createElement('div')
     cell.classList.add('cell')
     board.appendChild(cell)
@@ -56,6 +52,7 @@ const initSnake = () => {
 }
 
 const game = () => {
+  isGameStart = true
   moveIntervalID = setInterval(checkNextCell, 110)
   appleIntervalID = setInterval(() => {
     if (isNaN(apple)) generateApple()
@@ -73,7 +70,6 @@ const checkNextCell = () => {
 
 const moveSnake = () => {
   snake.unshift(snake[0] + direction)
-
   board.children[snake[0]].classList.add('snake')
   board.children[snake[snake.length - 1]].classList.remove('snake')
   snake.pop()
@@ -88,10 +84,10 @@ const checkForApple = () => {
 const eatApple = () => {
   board.children[snake[0]].classList.remove('apple')
   score++
-  scoreBoard.innerText = `Score: ${score}`
+  scorehtml.innerText = `Score: ${score}`
   apple = NaN
   console.log('apple removed')
-  growTail()
+  for (let i = 0; i < 2; i++) growTail()
 }
 
 const growTail = () => {
@@ -128,4 +124,3 @@ const endGame = () => {
 makeBoard()
 initSnake()
 generateApple()
-game()
