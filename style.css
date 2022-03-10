@@ -3,21 +3,23 @@ body {
   display: grid;
   justify-content: center;
   align-items: center;
+  color: white;
 }
 
 .board {
   display: flex;
   flex-flow: row wrap;
 
-  background-color: black;
+  background-color: white;
   height: 400px;
-  width: 400px;
+  width: 600px;
   border: solid 2px white;
 }
 
 .cell {
   width: 20px;
   height: 20px;
+  background-image: url('grass.png');
 }
 
 .snake {
@@ -25,11 +27,14 @@ body {
   border-radius: 50%;
 }
 
-.apple {
-  background-image: url('red_apple.png');
-  background-size: cover;
-}
-
 .score-board {
   color: white;
+}
+
+ul {
+  padding-inline-start: 20px;
+}
+
+#end_message {
+  opacity: 0;
 }

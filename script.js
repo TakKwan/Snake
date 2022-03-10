@@ -2,8 +2,12 @@ const board = document.querySelector('.board')
 const scorehtml = document.querySelector('#score')
 const lengthhtml = document.querySelector('#length')
 const resetButton = document.querySelector('#reset')
-const snake = [61, 41, 21, 1]
-const width = 20
+const end_message = document.querySelector('#end_message')
+const appleImg = document.createElement('img')
+appleImg.src = 'red_apple.png'
+appleImg.style.width = '100%'
+const snake = []
+const width = 30
 const height = 20
 const moveUp = -width
 const moveDown = width
@@ -11,7 +15,7 @@ const moveLeft = -1
 const moveRight = 1
 const numOfCells = width * height
 const cellsAroundTail = [width, -width, 1, -1]
-let direction = 0
+let direction = width
 let score = 0
 let apple = NaN
 let isGameStart = false
@@ -44,14 +48,12 @@ resetButton.addEventListener('click', () => {
   while (board.firstChild) board.removeChild(board.firstChild)
   makeBoard()
   while (snake[0]) snake.pop()
-  snake.push(61)
-  snake.push(41)
-  snake.push(21)
-  snake.push(1)
   initSnake()
   generateApple()
   scorehtml.innerText = 'Score: 0'
   lengthhtml.innerText = 'Length: 4'
+  isGameStart = false
+  end_message.style.opacity = 0
 })
 
 const makeBoard = () => {
@@ -64,6 +66,10 @@ const makeBoard = () => {
 }
 
 const initSnake = () => {
+  snake.push(3 * width + 1)
+  snake.push(2 * width + 1)
+  snake.push(1 + width)
+  snake.push(1)
   snake.forEach((element) => {
     board.children[element].classList.add('snake')
   })
@@ -75,10 +81,6 @@ const game = () => {
   appleIntervalID = setInterval(() => {
     if (isNaN(apple)) {
       generateApple()
-      removeAppleIntervalID = setInterval(() => {
-        clearInterval(removeAppleIntervalID)
-        if (apple) removeApple()
-      }, 6000)
     }
   }, 3000)
 }
@@ -105,13 +107,11 @@ const checkForApple = () => {
 }
 
 const eatApple = () => {
-  board.children[snake[0]].classList.remove('apple')
-  apple = NaN
+  removeApple()
   clearInterval(removeAppleIntervalID)
   score++
   scorehtml.innerText = `Score: ${score}`
-  console.log('apple removed')
-  for (let i = 0; i < 2; i++) growTail()
+  for (let i = 0; i < 4; i++) growTail()
 }
 
 const growTail = () => {
@@ -138,17 +138,26 @@ const generateApple = () => {
     newApple = Math.floor(Math.random() * numOfCells)
   } while (snake.includes(newApple))
   apple = newApple
-  board.children[newApple].classList.add('apple')
+  board.children[apple].classList.add('apple')
+  board.children[apple].appendChild(appleImg)
+  appleImg.style.opacity = 1
+
+  removeAppleIntervalID = setInterval(() => {
+    clearInterval(removeAppleIntervalID)
+    if (apple) removeApple()
+  }, 6000)
 }
 
 const endGame = () => {
   clearInterval(moveIntervalID)
   clearInterval(appleIntervalID)
   clearInterval(removeAppleIntervalID)
+  end_message.style.opacity = 1
 }
 
 const removeApple = () => {
   board.children[apple].classList.remove('apple')
+  appleImg.style.opacity = 0
   apple = NaN
 }
 
