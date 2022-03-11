@@ -64,6 +64,7 @@ document.addEventListener('keydown', (e) => {
 resetButton.addEventListener('click', () => {
   score = 0
   snakeLength = 1
+  snakeHead.src = 'snakeImg/headDown.png'
   while (board.firstChild) board.removeChild(board.firstChild)
   makeBoard()
   while (snake[0]) snake.pop()
