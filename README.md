@@ -1,16 +1,18 @@
 # Snake
 
+# [Game](Tak_snake.surge.sh)
+
 #### by: TakKwan Lo
 
 ---
 
 # Description:
 
-##### The snake will grow when it eats an apple. When it eats itselt, it dies.
+##### The snake will grow and gain score when it eats an apple. When it hits itself or the border, it dies. The apple has a countdown; the location of it will reset once countdown is finished.
 
 # Mechanices:
 
-##### Build a board with grids. Different color represent different grid. Say a red grid is an apple, a snake grid is green.
+##### The board is build with flexbox with a js for loop iterating to add cells. Also, the board is filled with the grass background image. The snake have its own elements of images that will change depending on the movement. A time intervel is used on the apple, making it relocate once in a while.
 
 # Inspirations:
 
