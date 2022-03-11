@@ -6,6 +6,12 @@
 
 ---
 
+![Alt](https://cdn.jpg.wtf/futurico/d8/5b/1369472582-d85b92feb8118d4afb8550474f1b7bf2.gif)
+
+###### From: https://gif.d3.ru/smotrim-do-kontsa-430982/?sorting=rating
+
+---
+
 # Description:
 
 ##### The snake will grow and gain score when it eats an apple. When it hits itself or the border, it dies. The apple has a countdown; the location of it will reset once countdown is finished.
