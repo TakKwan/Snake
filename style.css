@@ -10,7 +10,7 @@ body {
   display: flex;
   flex-flow: row wrap;
 
-  background-color: white;
+  background-color: black;
   height: 400px;
   width: 600px;
   border: solid 2px white;
@@ -20,11 +20,6 @@ body {
   width: 20px;
   height: 20px;
   background-image: url('grass.png');
-}
-
-.snake {
-  background-color: white;
-  border-radius: 50%;
 }
 
 .score-board {
