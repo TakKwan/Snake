@@ -1,6 +1,6 @@
 # Snake
 
-# [Game](Tak_snake.surge.sh)
+# [Game](https://Tak_snake.surge.sh)
 
 #### by: TakKwan Lo
 
@@ -16,7 +16,7 @@
 
 # Inspirations:
 
-#### [snake.io](snake.io)
+#### [snake.io](https://snake.io)
 
 #### [javascript snake](https://patorjk.com/games/snake/)
 
